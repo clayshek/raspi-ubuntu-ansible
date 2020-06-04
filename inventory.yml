@@ -6,4 +6,4 @@ all:
         rashome1:
     hypervisor:
       hosts:
-        piworker[1-3]:
+        piworker[1:3]:
