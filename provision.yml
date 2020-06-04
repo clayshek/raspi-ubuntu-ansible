@@ -1,20 +1,4 @@
 ---
-- name: Deploy 
-  hosts: all
-  gather_facts: false
-  connection: local
-  become: yes
-  become_method: sudo
-      
-  tasks:
-    - name: 'Change time zone'
-      timezone:
-        name: America/New_York
-    - name: 'Create standalone user'
-      hosts: standalone
-      user:
-        name: johnd-s
-    - name: 'Create hypervisor user'
-      hosts: hypervisor
-      user:
-        name: johnd-h
+
+- import_playbook: standalone.yml
+- import_playbook: hypervisor.yml
