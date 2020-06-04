@@ -1,0 +1,8 @@
+all:
+  children:
+    standalone:
+      hosts:
+        rashome1:
+    hypervisor:
+      hosts:
+        piworker[1-3]:
