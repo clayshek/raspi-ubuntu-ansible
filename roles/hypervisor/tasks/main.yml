@@ -1,0 +1,5 @@
+---
+
+- name: 'Create hypervisor user'
+  user:
+    name: johnd-h
