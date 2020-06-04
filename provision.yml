@@ -1,0 +1,9 @@
+---
+- name: Deploy 
+  hosts: base
+  connection: local
+  
+  tasks:
+    - name: 'Change time zone'
+      timezone:
+        name: America/New_York
