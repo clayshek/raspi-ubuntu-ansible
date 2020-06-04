@@ -8,7 +8,7 @@ all:
     hypervisor:
       hosts:
         piworker[1:3]:
- vars:
-  ansible_connectoin: local
+vars:
+  ansible_connection: local
   ansible_become: yes
   ansible_become_method: sudo
