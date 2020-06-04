@@ -1,6 +1,7 @@
 ---
 - name: Deploy 
   hosts: base
+  gather_facts: false
   connection: local
   
   tasks:
