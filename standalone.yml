@@ -1,0 +1,6 @@
+---
+
+- hosts: standalone
+  roles:
+    - common
+    - standalone
