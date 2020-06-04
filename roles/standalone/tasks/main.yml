@@ -1,0 +1,5 @@
+---
+    
+- name: 'Create standalone user'
+  user:
+    name: johnd-s
