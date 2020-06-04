@@ -7,3 +7,5 @@
     - name: 'Change time zone'
       timezone:
         name: America/New_York
+      become: yes
+      become_method: sudo
