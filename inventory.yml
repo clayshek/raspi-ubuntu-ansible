@@ -4,15 +4,12 @@ all:
   hosts:
     rashome1:
     pimaster:
-    piworker[1:3]:
-  vars:
-    ansible_connection: local
-    ansible_become: yes
-    ansible_become_method: sudo    
+    piworker[1:3]:   
   children:
     standalone:
       hosts:
         rashome1:
-    hypervisor:
+    kubernetes:
       hosts:
+        pimaster:
         piworker[1:3]:
