@@ -2,7 +2,7 @@
 
 - name: 'Change time zone'
   timezone:
-    name: {{time_zone}}
+    name: "{{time_zone}}"
     
 - name: 'Template out Netplan YAML to configure networking'
   template: 
