@@ -2,4 +2,4 @@
 
 - name: 'Change time zone'
   timezone:
-    name: America/New_York
+    name: {{time_zone}}
