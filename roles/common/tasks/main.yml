@@ -10,4 +10,6 @@
     dest: /etc/netplan/99_config.yaml
     
 - name: 'Applying Netplan Configuration'
-  command: sudo netplan apply 
+  command: netplan apply
+  become: yes
+  become_method: sudo
