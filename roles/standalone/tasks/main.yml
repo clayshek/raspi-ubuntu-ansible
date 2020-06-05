@@ -1,5 +1,6 @@
 ---
     
-- name: 'Create standalone user'
-  user:
-    name: johnd-s
+- name: 'Install Docker'
+  apt:
+    name: docker.io
+    state: present
