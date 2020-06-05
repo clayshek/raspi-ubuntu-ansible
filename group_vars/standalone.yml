@@ -1,0 +1,8 @@
+---
+# variables for hosts in standalone group
+
+# dns_server & dns_search_suffix can both contain multiple values, separated by comma
+dns_server: '192.168.1.1,8.8.8.8'
+dns_search_suffix: 'lab.layer8sys.com'
+
+time_zone: America/New_York
