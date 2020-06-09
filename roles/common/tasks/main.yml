@@ -13,3 +13,8 @@
   command: netplan apply
   become: yes
   become_method: sudo
+
+- name: 'Install CIFS-Utils'
+  apt:
+    name: cifs-utils
+    state: present
