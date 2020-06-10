@@ -1,4 +1,4 @@
-# ansible-test
+# raspi-ubuntu-ansible
 Raspberry Pi Ubuntu lab provisioning with Ansible
 
 # Overview: 
