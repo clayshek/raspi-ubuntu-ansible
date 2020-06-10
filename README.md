@@ -6,13 +6,13 @@ Repo contains necessary files to provision multiple Ubuntu Raspberry Pi in home 
 
 Ansible will further configure host networking (based on assigned hostname and assigned role & variables), setting IP, netmask, gateway, DNS server(s), and DNS search suffix(es) by creating a host-specific Netplan file from the included template.  Ansible will set the timezone (from variable) and, based on assigned role (here 'standalone' or 'kubernetes'), install Docker & CIFS-Utils (custom need here), and make the Raspberry Pi devices ready for further configuration or package installations as appropriate.
 
-Cloud-init portion based somewhat on https://github.com/StefanScherer/rpi-ubuntu, I like Raspberry Pi Imager (https://www.raspberrypi.org/documentation/installation/installing-images/) instead of flash for ability to run from Windows, but at the cost of not being able to flash user-data file in same operation.
+Cloud-init portion based somewhat on https://github.com/StefanScherer/rpi-ubuntu, I like [Raspberry Pi Imager](https://www.raspberrypi.org/documentation/installation/installing-images/) instead of flash for ability to run from Windows, but at the cost of not being able to flash user-data file in same operation.
 
 This replaces my Terraform bootstrap (https://github.com/clayshek/terraform-raspberrypi-bootstrap) for ease of use and combining provisionsing with some initial configuration.
 
 # Usage:
-- Contents here reflect my lab infrastructure, but with a few modifications should be portable elsewhere. My lab has two primary roles: 'standalone' which primarily is an Ansible control node, and misc Docker containers, and 'kubernetes' which is a 4 node k3s cluster (further setup with a separate Ansible playbook). Roles and package installations can be further customized.
-- Simply flash Raspberry Pi SD card with desired Ubuntu Server version: https://ubuntu.com/download/raspberry-pi
+- Contents here reflect my lab infrastructure, but with a few modifications should be portable elsewhere. My lab has two primary roles: 'standalone' which primarily is an Ansible control node, and misc Docker containers, and 'kubernetes' which is a 4 node k3s cluster (further setup using [Rancher's Ansible Kubernetes k3s playbook](https://github.com/rancher/k3s-ansible). Roles and package installations can be further customized.
+- Simply flash Raspberry Pi SD card with desired [Ubuntu Server version](https://ubuntu.com/download/raspberry-pi)
 - Copy user-data to boot partition of SD card (first customize hostname value, which should be reflected in Ansible inventory.yml file and have a .yml variables file in host_vars, do any user/ssh key modifications as necessary, and update Git repo location as appropriate)
 - Boot Raspberry Pi, after a few minutes, Pi should be provisioned 
 - Troubleshoot logs at /var/log/cloud-init-output.log & /var/log/ansible-provision.run
