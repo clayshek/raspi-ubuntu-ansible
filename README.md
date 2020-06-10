@@ -13,6 +13,6 @@ This replaces my Terraform bootstrap (https://github.com/clayshek/terraform-rasp
 # Usage:
 - Contents here reflect my lab infrastructure, but with a few modifications should be portable elsewhere. My lab has two primary roles: 'standalone' which primarily is an Ansible control node, and misc Docker containers, and 'kubernetes' which is a 4 node k3s cluster (further setup with a separate Ansible playbook). Roles and package installations can be further customized.
 - Simply flash Raspberry Pi SD card with desired Ubuntu Server version: https://ubuntu.com/download/raspberry-pi
-- Copy user-data to boot partition of SD card (first customize hostname value, which should be reflected in Ansible inventory.yml file and have a .yml variables file in host_vars, and do any user/ssh key modifications as necessary)
+- Copy user-data to boot partition of SD card (first customize hostname value, which should be reflected in Ansible inventory.yml file and have a .yml variables file in host_vars, do any user/ssh key modifications as necessary, and update Git repo location as appropriate)
 - Boot Raspberry Pi, after a few minutes, Pi should be provisioned 
 - Troubleshoot logs at /var/log/cloud-init-output.log & /var/log/ansible-provision.run
