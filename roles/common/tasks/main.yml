@@ -14,11 +14,6 @@
   become: yes
   become_method: sudo
 
-- name: 'Install CIFS-Utils'
-  apt:
-    name: cifs-utils
-    state: present
-
 - name: Upgrade the OS (apt-get dist-upgrade)
   apt:
     upgrade: dist
@@ -31,3 +26,8 @@
     state: latest
     update_cache: yes
   become: yes
+
+- name: 'Install CIFS-Utils'
+  apt:
+    name: cifs-utils
+    state: present
