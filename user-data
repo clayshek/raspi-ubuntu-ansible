@@ -7,35 +7,14 @@
 #
 # https://cloudinit.readthedocs.io/
 #
-# Some additional examples are provided in comments below the default
-# configuration.
 
 # Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
 hostname: rashome1
 
-# On first boot, set the (default) ubuntu user's password to "ubuntu" and
-# do not expire user passwords
-#chpasswd:
-#  expire: false
-#  list:
-#  - ubuntu:ubuntu
-
 # Enable password authentication with the SSH daemon
 ssh_pwauth: true
 
-## On first boot, use ssh-import-id to give the specific users SSH access to
-## the default user
-#ssh_import_id:
-#- lp:my_launchpad_username
-#- gh:my_github_username
-
 ## Add users and groups to the system, and import keys with the ssh-import-id
-## utility
-#groups:
-#- robot: [robot]
-#- robotics: [robot]
-#- pi
-#
 users:
 - name: ansible
   primary-group: users
@@ -46,52 +25,22 @@ users:
   lock_passwd: true
   ssh-authorized-keys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtpAxHXoJaIxbbfkTZGh6IPqCfQyD7oBSwDxdocNmzxbMXbfqwML/CN7Rfp0icBC+fCL03LgcpmZ9nuF1Jvfjp90JhnXWD2hrnLjBrOaP4x6RlTSkFLSLxgJaLe6JTjb3pMJmkPgqpNhtC/T2SyfG8G5MRDnNItyn5vof2ZxanDO5rs2unNpr11LIFqa9s/UmjUQFOgeqWT8OZWY239abdMzh2OvY4gsDn5KCOHuzPdy8zcYeevLozInY4kNvywZtx+KkA0j6X9LHTO0Il7IzvPcdpw8VlqMK/mw3ENcE4aHfbmGyRKOSmamP5Wi0fCZqjXYnFQy+nyBIkz7Yi3IFQjUVuCuafIBvDmWUCuYiL3fmCH4R+KdNzE/Jes3zXABjcYF89fHRu2O99kKKjj53Un7SUdghtJrH9h4FJKOrZHgRqT4udJ2vOwxJB9qwW8Q0vqn/U79Ds80+H3updm40OUJB93LtMPpwqIKghuDsFaYO/J62zK38UBLZpUvKeCf8= ansible@rashome1
-#- default
-#- name: robot
-#  gecos: Mr. Robot
-#  primary_group: robot
-#  groups: users
-#  ssh_import_id: foobar
-#  lock_passwd: false
-#  passwd: $5$hkui88$nvZgIle31cNpryjRfO9uArF7DYiBcWEnjqq7L1AQNN3
 
 ## Update apt database and upgrade packages on first boot
-# package_update: true
-# package_upgrade: true
+package_update: true
+package_upgrade: true
 
 ## Install additional packages on first boot
 packages:
 - avahi-daemon
 - ansible
-#- pastebinit
-#- [libpython2.7, 2.7.3-0ubuntu3.1]
-
-## Write arbitrary files to the file-system (including binaries!)
-#write_files:
-#- path: /etc/default/keyboard
-#  content: |
-#    # KEYBOARD configuration file
-#    # Consult the keyboard(5) manual page.
-#    XKBMODEL="pc105"
-#    XKBLAYOUT="gb"
-#    XKBVARIANT=""
-#    XKBOPTIONS="ctrl: nocaps"
-#  permissions: '0644'
-#  owner: root:root
-#- encoding: gzip
-#  path: /usr/bin/hello
-#  content: !!binary |
-#    H4sIAIDb/U8C/1NW1E/KzNMvzuBKTc7IV8hIzcnJVyjPL8pJ4QIA6N+MVxsAAAA=
-#  owner: root:root
-#  permissions: '0755'
 
 ## Run arbitrary commands at rc.local like time
 runcmd:
   # Pickup the hostname changes
   - 'sudo systemctl restart avahi-daemon'
+  # Run Ansible play
   - 'sudo ansible-pull -U https://github.com/clayshek/raspi-ubuntu-ansible.git -i inventory.yml provision.yml > /var/log/ansible-provision.run 2>&1'
-#- [ sh, -xc, "echo $(date) ': hello world!'" ]
-#- [ wget, "http://ubuntu.com", -O, /run/mydir/index.html ]
 
 powerstate:
   delay: "+5"
