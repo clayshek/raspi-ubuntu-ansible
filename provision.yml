@@ -2,4 +2,4 @@
 
 - import_playbook: pidevbox.yml
 - import_playbook: pinas.yml
-- import_playbook: pidocker-swarm.yml
+- import_playbook: pidockerswarm.yml
