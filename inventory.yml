@@ -8,4 +8,4 @@ devbox:
     pidevbox:
 dockerswarm:
   hosts:
-    piswarm[1:4]:
+    piswarm1:
