@@ -3,4 +3,4 @@
 - hosts: dockerswarm
   roles:
     - common
-    - standalone
+    - dockerswarm
