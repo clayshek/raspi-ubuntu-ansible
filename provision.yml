@@ -1,4 +1,5 @@
 ---
 
-- import_playbook: standalone.yml
-- import_playbook: kubernetes.yml
+- import_playbook: pidevbox.yml
+- import_playbook: pinas.yml
+- import_playbook: pidocker-swarm.yml
