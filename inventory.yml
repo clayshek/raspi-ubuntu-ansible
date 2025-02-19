@@ -2,14 +2,16 @@
 
 all:
   hosts:
-    rashome1:
-    pimaster:
-    piworker[1:3]:   
+    pidevbox:
+    pinas:
+    piswarm[1:4]:   
   children:
-    standalone:
+    nas:
       hosts:
-        rashome1:
-    kubernetes:
+        pinas:
+    devbox:
       hosts:
-        pimaster:
-        piworker[1:3]:
+        pidevbox:
+    dockerswarm:
+      hosts:
+        piswarm[1:4]:
