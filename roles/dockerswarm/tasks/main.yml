@@ -1,6 +1,10 @@
 ---
     
 - name: 'Install Docker'
-  apt:
-    name: docker.io
-    state: present
+  ansible.builtin.apt:
+    pkg:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io 
+    - docker-buildx-plugin 
+    - docker-compose-plugin
