@@ -2,9 +2,11 @@
     
 - name: 'Install Docker'
   ansible.builtin.apt:
-    pkg:
-    - docker-ce 
-    - docker-ce-cli 
-    - containerd.io 
-    - docker-buildx-plugin 
-    - docker-compose-plugin
+    name: docker.io
+    state: present
+#    pkg:
+#    - docker-ce 
+#    - docker-ce-cli 
+#    - containerd.io 
+#    - docker-buildx-plugin 
+#    - docker-compose-plugin
