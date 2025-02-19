@@ -5,7 +5,9 @@ network:
     eth0:
       addresses:
         - {{static_ip_and_mask}}
-      gateway4: {{default_gateway}}
+      routes:
+        - to: default
+          via: {{default_gateway}}
       dhcp4: false
       nameservers:
           search: [{{dns_search_suffix}}]
