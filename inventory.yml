@@ -1,17 +1,11 @@
 ---
 
-all:
+nas:
+  hosts:
+    pinas:
+devbox:
   hosts:
     pidevbox:
-    pinas:
-    piswarm[1:4]:   
-  children:
-    nas:
-      hosts:
-        pinas:
-    devbox:
-      hosts:
-        pidevbox:
-    dockerswarm:
-      hosts:
-        piswarm[1:4]:
+dockerswarm:
+  hosts:
+    piswarm[1:4]:
