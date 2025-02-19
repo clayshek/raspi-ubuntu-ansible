@@ -1,6 +1,6 @@
 ---
 
-- hosts: standalone
+- hosts: dockerswarm
   roles:
     - common
     - standalone
