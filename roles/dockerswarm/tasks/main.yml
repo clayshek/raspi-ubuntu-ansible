@@ -1,4 +1,7 @@
 ---
+
+docker_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if ansible_architecture == 'armv7l' else 'amd64' }}"
+docker_apt_repository: "deb [arch={{ docker_apt_arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu | lower }} {{ ansible_distribution_release }} stable"
     
 - name: 'Install Docker Prereqs'
   ansible.builtin.apt:
@@ -20,8 +23,7 @@
 
 - name: Add Docker repository.
   apt_repository:
-    repo: "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable"
+    repo: "{{ docker_apt_repository }}"
     state: present
     filename: "docker"
     update_cache: true
