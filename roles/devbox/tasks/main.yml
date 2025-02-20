@@ -1,1 +1,29 @@
 ---
+
+# Install GPG pre-req for apt_key module
+- name: Install GPG
+  ansible.builtin.apt:
+    name: gpg
+    state: present
+    update_cache: yes
+
+# Install Hashicorp APT key
+- name: Add Hashicorp apt key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Get distribution
+  command: lsb_release -cs
+  register: distro    
+
+# Add Hashicorp repo
+- name: Add Hashicorp repository into sources list
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ distro.stdout }} main"
+    state: present    
+
+# https://developer.hashicorp.com/terraform/install
+# wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# sudo apt update && sudo apt install terraform
