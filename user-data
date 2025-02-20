@@ -1,47 +1,34 @@
 #cloud-config
-
-# This is the user-data configuration file for cloud-init. By default this sets
-# up an initial user called "ubuntu" with password "ubuntu", which must be
-# changed at first login. However, many additional actions can be initiated on
-# first boot from this file. The cloud-init documentation has more details:
-#
-# https://cloudinit.readthedocs.io/
-#
-
-# Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
-hostname: rashome1
-
-# Enable password authentication with the SSH daemon
-ssh_pwauth: true
-
-## Add users and groups to the system, and import keys with the ssh-import-id
-users:
-- name: ansible
-  primary-group: users
-  shell: /bin/bash
-  sudo: ALL=(ALL) NOPASSWD:ALL
-  passwd: $5$JohOZuDSz8s4hrMS$WAmGo.fT8UTVLLExKKag1KEP9QAIn16KJCfcEEhfnWC
-  groups: users,adm,dialout,audio,plugdev,netdev,video
-  lock_passwd: true
-  ssh-authorized-keys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtpAxHXoJaIxbbfkTZGh6IPqCfQyD7oBSwDxdocNmzxbMXbfqwML/CN7Rfp0icBC+fCL03LgcpmZ9nuF1Jvfjp90JhnXWD2hrnLjBrOaP4x6RlTSkFLSLxgJaLe6JTjb3pMJmkPgqpNhtC/T2SyfG8G5MRDnNItyn5vof2ZxanDO5rs2unNpr11LIFqa9s/UmjUQFOgeqWT8OZWY239abdMzh2OvY4gsDn5KCOHuzPdy8zcYeevLozInY4kNvywZtx+KkA0j6X9LHTO0Il7IzvPcdpw8VlqMK/mw3ENcE4aHfbmGyRKOSmamP5Wi0fCZqjXYnFQy+nyBIkz7Yi3IFQjUVuCuafIBvDmWUCuYiL3fmCH4R+KdNzE/Jes3zXABjcYF89fHRu2O99kKKjj53Un7SUdghtJrH9h4FJKOrZHgRqT4udJ2vOwxJB9qwW8Q0vqn/U79Ds80+H3updm40OUJB93LtMPpwqIKghuDsFaYO/J62zK38UBLZpUvKeCf8= ansible@rashome1
-
-## Update apt database and upgrade packages on first boot
-package_update: true
-package_upgrade: true
-
-## Install additional packages on first boot
+hostname: piswarm1
+manage_etc_hosts: true
 packages:
 - avahi-daemon
-- ansible
+apt:
+  conf: |
+    Acquire {
+      Check-Date "false";
+    };
 
-## Run arbitrary commands at rc.local like time
+users:
+- name: clays
+  groups: users,adm,dialout,audio,netdev,video,plugdev,cdrom,games,input,gpio,spi,i2c,render,sudo
+  shell: /bin/bash
+  lock_passwd: true
+  passwd: $5$/1czcKwIws$3UKufATwdEbnGf.TsgPM5CrSNtu7c7w7E2BmL.Hdzz3
+  ssh_authorized_keys:
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsfV1C2TAYqBZBuntJIZjuC+vLwZqTVrXGxal/iCY/k
+  sudo: ALL=(ALL) NOPASSWD:ALL
+
+
+timezone: America/New_York
 runcmd:
-  # Pickup the hostname changes
-  - 'sudo systemctl restart avahi-daemon'
-  # Run Ansible play
-  - 'sudo ansible-pull -U https://github.com/clayshek/raspi-ubuntu-ansible.git -i inventory.yml provision.yml > /var/log/ansible-provision.run 2>&1'
+- localectl set-x11-keymap "us" pc105
+- setupcon -k --force || true
 
-powerstate:
-  delay: "+5"
-  mode: reboot
+ansible:
+  package_name: ansible-core
+  install_method: distro
+  pull:
+    url: "https://github.com/clayshek/raspi-ubuntu-ansible.git"
+    playbook_name: main.yml
+    inventory: inventory.yml
