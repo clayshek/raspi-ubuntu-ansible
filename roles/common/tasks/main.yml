@@ -1,23 +1,23 @@
 ---
 
 - name: 'Template out Netplan YAML to configure networking'
-  template: 
+  ansible.builtin.template: 
     src: ./templates/99_config.yaml.tpl
     dest: /etc/netplan/99_config.yaml
     
 - name: 'Applying Netplan Configuration'
-  command: netplan apply
+  ansible.builtin.command: netplan apply
   become: yes
   become_method: sudo
 
 - name: Upgrade the OS (apt-get dist-upgrade)
-  apt:
+  ansible.builtin.apt:
     upgrade: dist
     update_cache: yes
   become: yes
  
 - name: Update all packages to latest versions
-  apt:
+  ansible.builtin.apt:
     name: "*"
     state: latest
     update_cache: yes
