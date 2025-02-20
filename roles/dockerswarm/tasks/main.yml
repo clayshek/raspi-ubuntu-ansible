@@ -7,7 +7,7 @@
     - apt-transport-https
 
 - name: Ensure directory exists for /etc/apt/keyrings
-  file:
+  ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
     mode: "0755"
@@ -19,7 +19,7 @@
     mode: "0644"
 
 - name: Add Docker repository.
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
     filename: "docker"
