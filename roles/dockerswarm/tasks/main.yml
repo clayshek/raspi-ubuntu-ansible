@@ -1,12 +1,36 @@
 ---
     
-- name: 'Install Docker'
+- name: 'Install Docker Prereqs'
   ansible.builtin.apt:
-    name: docker.io
+    pkg:
+    - ca-certificates
+    - apt-transport-https
+
+- name: Ensure directory exists for /etc/apt/keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Add Docker apt key.
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: Add Docker repository.
+  apt_repository:
+    repo: "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable"
     state: present
-#    pkg:
-#    - docker-ce 
-#    - docker-ce-cli 
-#    - containerd.io 
-#    - docker-buildx-plugin 
-#    - docker-compose-plugin
+    filename: "docker"
+    update_cache: true
+
+- name: 'Install Docker Packages'
+  ansible.builtin.apt:
+    pkg:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io 
+    - docker-buildx-plugin 
+    - docker-compose-plugin
