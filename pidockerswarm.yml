@@ -4,4 +4,4 @@
   roles:
     - common
     - dockerswarm
-    - reboot
+#    - reboot
